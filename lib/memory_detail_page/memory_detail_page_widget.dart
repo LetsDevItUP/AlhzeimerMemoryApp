@@ -1,9 +1,11 @@
+import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 
 class MemoryDetailPageWidget extends StatefulWidget {
   const MemoryDetailPageWidget({
@@ -18,6 +20,8 @@ class MemoryDetailPageWidget extends StatefulWidget {
 }
 
 class _MemoryDetailPageWidgetState extends State<MemoryDetailPageWidget> {
+  ApiCallResponse? speechUrl;
+  AudioPlayer? soundPlayer;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -82,6 +86,49 @@ class _MemoryDetailPageWidgetState extends State<MemoryDetailPageWidget> {
                         r'''$.description''',
                       ).toString(),
                       style: FlutterFlowTheme.of(context).bodyText2,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      speechUrl = await TextToSpeechCall.call(
+                        text: getJsonField(
+                          widget.memory,
+                          r'''$.description''',
+                        ).toString(),
+                      );
+                      soundPlayer ??= AudioPlayer();
+                      if (soundPlayer!.playing) {
+                        await soundPlayer!.stop();
+                      }
+
+                      soundPlayer!
+                          .setUrl(getJsonField(
+                            (speechUrl?.jsonBody ?? ''),
+                            r'''$.audioURL''',
+                          ))
+                          .then((_) => soundPlayer!.play());
+
+                      setState(() {});
+                    },
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(8, 4, 8, 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.play_arrow,
+                              color: Color(0xFF25AA41),
+                              size: 24,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],

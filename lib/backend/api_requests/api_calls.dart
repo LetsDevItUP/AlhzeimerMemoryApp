@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../flutter_flow/flutter_flow_util.dart';
 
 import 'api_manager.dart';
@@ -16,6 +18,7 @@ class RandomJokeCall {
       headers: {},
       params: {},
       returnBody: true,
+      cache: false,
     );
   }
 
@@ -49,6 +52,7 @@ class SaveMemoryCall {
       body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
+      cache: false,
     );
   }
 }
@@ -63,6 +67,30 @@ class GetMemoriesCall {
       headers: {},
       params: {},
       returnBody: true,
+      cache: false,
+    );
+  }
+}
+
+class TextToSpeechCall {
+  static Future<ApiCallResponse> call({
+    String? text = 'Sample Text',
+  }) {
+    final body = '''
+{
+  "text": "${text}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Text To Speech',
+      apiUrl:
+          'https://prod-44.westeurope.logic.azure.com:443/workflows/d35f139806d24ce88fa88dccd5a4a9d2/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tp0S0dhNjgp4VKzo4KNeR7IldrfF87qoIsP_lmBIm70',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      cache: false,
     );
   }
 }
@@ -81,4 +109,13 @@ class ApiPagingParams {
   @override
   String toString() =>
       'PagingParams(nextPageNumber: $nextPageNumber, numItems: $numItems, lastResponse: $lastResponse,)';
+}
+
+String _serializeList(List? list) {
+  list ??= <String>[];
+  try {
+    return json.encode(list);
+  } catch (_) {
+    return '[]';
+  }
 }

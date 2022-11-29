@@ -213,7 +213,7 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
+    return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(
           sigmaX: 3,
@@ -355,7 +355,7 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                          child: FlutterFlowDropDown(
+                          child: FlutterFlowDropDown<String>(
                             options: [
                               'Doctors Visit',
                               'Routine Checkup',

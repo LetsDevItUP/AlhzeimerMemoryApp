@@ -47,7 +47,7 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
+    return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(
           sigmaX: 4,
@@ -187,7 +187,7 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                          child: FlutterFlowDropDown(
+                          child: FlutterFlowDropDown<String>(
                             initialOption: dropDownValue ??=
                                 widget.userAppointment!.appointmentType,
                             options: [

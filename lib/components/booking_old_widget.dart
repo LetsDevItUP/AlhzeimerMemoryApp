@@ -185,7 +185,7 @@ class _BookingOldWidgetState extends State<BookingOldWidget> {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                child: FlutterFlowDropDown(
+                child: FlutterFlowDropDown<String>(
                   options: ['Doctors Visit', 'Routine Checkup', 'Scan/Update'],
                   onChanged: (val) => setState(() => dropDownValue = val),
                   width: MediaQuery.of(context).size.width * 0.9,
